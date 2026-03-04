@@ -4,7 +4,7 @@ A CLI + browser-playable number guessing game with a retro terminal UI and a per
 
 ## Live Demo
 
-**[https://number-guessing-game.onrender.com](https://number-guessing-game.onrender.com)**
+**[https://number-guessing-game-8mhf.onrender.com](https://number-guessing-game-8mhf.onrender.com)**
 
 > The free Render tier spins down after 15 min of inactivity — first load may take ~30 seconds to wake up.
 
