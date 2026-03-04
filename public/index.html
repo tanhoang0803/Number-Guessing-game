@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Number Guessing Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="crt">
+    <div class="scanlines"></div>
+
+    <!-- ── Header ───────────────────────────────────────────────── -->
+    <header>
+      <h1 class="glitch" data-text="NUMBER GUESSING GAME">NUMBER GUESSING GAME</h1>
+      <div id="clock" class="dim"></div>
+    </header>
+
+    <!-- ── Setup screen ─────────────────────────────────────────── -->
+    <section id="setup-screen" class="screen active">
+      <p class="intro">
+        I'm thinking of a number between <span class="hl">1</span> and <span class="hl">100</span>.<br/>
+        Choose your difficulty and try to guess it!
+      </p>
+
+      <div class="field">
+        <label for="player-name">Player name:</label>
+        <input id="player-name" type="text" maxlength="20" placeholder="Enter name…" autocomplete="off" />
+      </div>
+
+      <div class="field">
+        <label>Difficulty:</label>
+        <div class="diff-buttons">
+          <button class="diff-btn active" data-diff="easy">
+            EASY<br/><span class="dim">10 chances · 1000 pts</span>
+          </button>
+          <button class="diff-btn" data-diff="medium">
+            MEDIUM<br/><span class="dim">5 chances · 2000 pts</span>
+          </button>
+          <button class="diff-btn" data-diff="hard">
+            HARD<br/><span class="dim">3 chances · 3000 pts</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="start-btn" class="primary-btn">▶ START GAME</button>
+        <button id="scores-btn" class="secondary-btn">🏆 LEADERBOARD</button>
+      </div>
+    </section>
+
+    <!-- ── Game screen ──────────────────────────────────────────── -->
+    <section id="game-screen" class="screen">
+      <div class="game-meta">
+        <span id="meta-diff" class="tag"></span>
+        <span id="meta-timer" class="tag">⏱ 0s</span>
+        <span id="meta-score-preview" class="tag dim"></span>
+      </div>
+
+      <div id="attempt-dots" class="dots"></div>
+
+      <div id="feedback" class="feedback-line">&nbsp;</div>
+
+      <div class="guess-row">
+        <input id="guess-input" type="number" min="1" max="100" placeholder="1–100" autocomplete="off" />
+        <button id="guess-btn" class="primary-btn">GUESS</button>
+      </div>
+
+      <div id="hint-area" class="hint-area hidden">
+        <p id="range-hint" class="hint-text"></p>
+        <button id="parity-btn" class="secondary-btn">💡 Reveal parity (−200 pts)</button>
+      </div>
+
+      <div id="guess-log" class="guess-log"></div>
+    </section>
+
+    <!-- ── Result screen ────────────────────────────────────────── -->
+    <section id="result-screen" class="screen">
+      <div id="result-icon" class="result-icon"></div>
+      <p  id="result-message" class="result-message"></p>
+      <div class="result-stats">
+        <div class="stat"><span class="stat-label">Score</span><span id="res-score" class="stat-value"></span></div>
+        <div class="stat"><span class="stat-label">Rank</span><span id="res-rank"  class="stat-value"></span></div>
+        <div class="stat"><span class="stat-label">Time</span><span id="res-time"  class="stat-value"></span></div>
+        <div class="stat"><span class="stat-label">Guesses</span><span id="res-attempts" class="stat-value"></span></div>
+      </div>
+      <div class="actions">
+        <button id="play-again-btn"  class="primary-btn">▶ PLAY AGAIN</button>
+        <button id="change-diff-btn" class="secondary-btn">↩ CHANGE DIFFICULTY</button>
+        <button id="result-scores-btn" class="secondary-btn">🏆 LEADERBOARD</button>
+      </div>
+    </section>
+
+    <!-- ── Leaderboard overlay ──────────────────────────────────── -->
+    <div id="leaderboard-overlay" class="overlay hidden">
+      <div class="overlay-box">
+        <button id="close-lb" class="close-btn">✕</button>
+        <h2>🏆 LEADERBOARD</h2>
+        <div class="lb-tabs">
+          <button class="lb-tab active" data-filter="">ALL</button>
+          <button class="lb-tab" data-filter="easy">EASY</button>
+          <button class="lb-tab" data-filter="medium">MEDIUM</button>
+          <button class="lb-tab" data-filter="hard">HARD</button>
+        </div>
+        <table id="lb-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Score</th>
+              <th>Diff</th>
+              <th>Guesses</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody id="lb-body"></tbody>
+        </table>
+        <p id="lb-empty" class="dim hidden">No scores yet. Be the first!</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
