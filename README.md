@@ -1,70 +1,88 @@
 # Number Guessing Game
 
-A simple CLI-based number guessing game where the computer randomly selects a number between 1 and 100, and the player must guess it within a limited number of attempts.
+A CLI + browser-playable number guessing game with a retro terminal UI and a persistent ranked leaderboard.
+
+## Live Demo
+
+**[https://number-guessing-game.onrender.com](https://number-guessing-game.onrender.com)**
+
+> The free Render tier spins down after 15 min of inactivity — first load may take ~30 seconds to wake up.
+
+---
 
 ## How to Play
 
-1. Launch the game from the command line.
-2. Read the welcome message and rules.
-3. Select a difficulty level:
-   | Difficulty | Chances |
-   |------------|---------|
-   | Easy       | 10      |
-   | Medium     | 5       |
-   | Hard       | 3       |
-4. Enter your guesses one at a time.
-5. After each wrong guess, you'll be told if the target number is **higher** or **lower** than your guess.
-6. Win by guessing the correct number before you run out of chances!
+1. Enter your name and choose a difficulty level.
+2. Guess the secret number (1–100) before your chances run out.
+3. After each wrong guess the game tells you whether to go **higher** or **lower**.
+4. After 2 wrong guesses, a **range hint** appears; you can also reveal the number's **parity** (even/odd) for a −200 pt penalty.
+5. Win to earn a score and appear on the leaderboard!
 
-## Sample Session
+| Difficulty | Chances | Base Score |
+|------------|---------|------------|
+| Easy       | 10      | 1 000 pts  |
+| Medium     | 5       | 2 000 pts  |
+| Hard       | 3       | 3 000 pts  |
 
+### Scoring formula
 ```
-Welcome to the Number Guessing Game!
-I'm thinking of a number between 1 and 100.
-
-Please select the difficulty level:
-1. Easy (10 chances)
-2. Medium (5 chances)
-3. Hard (3 chances)
-
-Enter your choice: 2
-Great! You have selected the Medium difficulty level.
-Let's start the game!
-
-Enter your guess: 50
-Incorrect! The number is less than 50.
-Enter your guess: 25
-Incorrect! The number is greater than 25.
-Enter your guess: 35
-Incorrect! The number is less than 35.
-Enter your guess: 30
-Congratulations! You guessed the correct number in 4 attempts.
+score = base
+      − wrongGuesses × floor(base / chances)
+      − min(seconds × 2, base × 0.3)
+      − hintsUsed × 200
+      (minimum 50 pts)
 ```
 
-## Features
+---
 
-- **Difficulty levels** — Easy, Medium, and Hard control the number of allowed guesses.
-- **Directional hints** — After each wrong guess the game tells you whether to guess higher or lower.
-- **Input validation** — Non-numeric input and out-of-range guesses are handled gracefully.
-
-## Optional / Bonus Features
-
-- **Play again** — Option to start a new round without restarting the program.
-- **Timer** — Measures how long it takes you to guess the number.
-- **Hint system** — Extra clues (e.g., even/odd, narrowed range) if you're stuck.
-- **High score tracking** — Remembers your best (fewest attempts) score per difficulty level.
-
-## Requirements
-
-- No external dependencies — uses only the standard library of the chosen language.
-- Runs entirely in the terminal / command prompt.
-
-## Getting Started
+## Run Locally
 
 ```bash
-# Example for a Python implementation
-python src/main.py
+git clone https://github.com/tanhoang0803/Number-Guessing-game.git
+cd Number-Guessing-game
+npm install
 
-# Example for a Node.js implementation
-node src/main.js
+# Web version → http://localhost:3000
+npm start
+
+# CLI version
+npm run cli
 ```
+
+---
+
+## Project Structure
+
+```
+Guessing_game/
+├── render.yaml          # Render.com deployment config
+├── server.js            # Express API + static file serving
+├── src/
+│   ├── gameLogic.js     # Shared scoring formula & constants
+│   └── cli.js           # Terminal game (readline)
+└── public/
+    ├── index.html       # 3-screen UI + leaderboard overlay
+    ├── style.css        # Retro CRT terminal theme
+    └── game.js          # Frontend state machine
+```
+
+---
+
+## API Endpoints
+
+| Method | Path | Description |
+|--------|------|-------------|
+| POST | `/api/game/start` | Start a new game session |
+| POST | `/api/game/guess` | Submit a guess |
+| GET  | `/api/game/hint?gameId=` | Get parity hint (once per game) |
+| GET  | `/api/scores?difficulty=` | Fetch top-20 leaderboard |
+| POST | `/api/scores` | Submit final score |
+
+---
+
+## Deploy Your Own (Render.com)
+
+1. Fork this repo.
+2. Go to [render.com](https://render.com) → **New → Web Service**.
+3. Connect your GitHub repo — Render auto-detects `render.yaml`.
+4. Click **Deploy**. Done.
