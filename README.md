@@ -1,5 +1,7 @@
 # Number Guessing Game
 
+[![CI](https://github.com/tanhoang0803/Number-Guessing-game/actions/workflows/ci.yml/badge.svg)](https://github.com/tanhoang0803/Number-Guessing-game/actions/workflows/ci.yml)
+
 A CLI + browser-playable number guessing game with a retro terminal UI and a persistent ranked leaderboard.
 
 ## Live Demo
