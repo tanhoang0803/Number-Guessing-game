@@ -88,3 +88,9 @@ Guessing_game/
 2. Go to [render.com](https://render.com) → **New → Web Service**.
 3. Connect your GitHub repo — Render auto-detects `render.yaml`.
 4. Click **Deploy**. Done.
+
+---
+
+## Project Reference
+
+This project is based on the [Number Guessing Game](https://roadmap.sh/projects/number-guessing-game) challenge from [roadmap.sh](https://roadmap.sh) — a beginner-level CLI project focused on programming logic and command-line interaction.
